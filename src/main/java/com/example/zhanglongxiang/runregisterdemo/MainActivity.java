@@ -3,6 +3,7 @@ package com.example.zhanglongxiang.runregisterdemo;
 import android.app.Activity;
 
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iflytek.cloud.RecognizerListener;
@@ -23,8 +25,8 @@ import com.iflytek.cloud.SpeechUtility;
 public class MainActivity extends Activity {
 
     private Button startButton = null;
-    private EditText mResultText = null;
-
+    //private EditText mResultText = null;
+    private TextView mResultText = null;
     private SpeechRecognizer iatRecognizer;
     private String engine = "iat";
     private String rate = "16000";
@@ -37,12 +39,14 @@ public class MainActivity extends Activity {
 
         SpeechUtility.createUtility(this,SpeechConstant.APPID+"=563cafe2");
 
-
-
-        mResultText = (EditText)findViewById(R.id.editText);
+        //mResultText = (EditText)findViewById(R.id.editText);
+        mResultText = (TextView)findViewById(R.id.showText);
         startButton = (Button)findViewById(R.id.button_start);
 
-        final char[] tc = {'h','e','l','l','o','w','o','r','l','d'};
+        //Typeface fontFace = Typeface.createFromAsset(getAssets(),"fonts/华文楷体.ttf");
+        //mResultText.setTypeface(fontFace);
+
+        //final char[] tc = {'h','e','l','l','o','w','o','r','l','d'};
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +82,10 @@ public class MainActivity extends Activity {
         @Override
         public void onResult(RecognizerResult recognizerResult, boolean b) {
             String text = JsonParser.parseIatResult(recognizerResult.getResultString());
-            mResultText.append(text);
-            mResultText.setSelection(mResultText.length());
+            String s = (String)text.subSequence(0,1);//只取第一个字符
+
+            mResultText.setText(s);
+            //mResultText.setSelection(mResultText.length());
         }
 
         @Override
@@ -93,10 +99,6 @@ public class MainActivity extends Activity {
 
         }
     };
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
