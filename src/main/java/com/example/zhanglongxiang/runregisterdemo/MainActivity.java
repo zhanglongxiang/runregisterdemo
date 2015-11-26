@@ -40,8 +40,10 @@ public class MainActivity extends Activity {
         SpeechUtility.createUtility(this,SpeechConstant.APPID+"=563cafe2");
 
         //mResultText = (EditText)findViewById(R.id.editText);
-        mResultText = (TextView)findViewById(R.id.showText);
-        startButton = (Button)findViewById(R.id.button_start);
+        mResultText = (TextView)findViewById(R.id.showText);//获取textview
+//        Typeface face = Typeface.createFromAsset(getAssets(),"fonts/hwkt.ttf");//设置楷体
+//        mResultText.setTypeface(face);
+        startButton = (Button)findViewById(R.id.button_start);//获取按钮
 
         //Typeface fontFace = Typeface.createFromAsset(getAssets(),"fonts/华文楷体.ttf");
         //mResultText.setTypeface(fontFace);
@@ -56,7 +58,7 @@ public class MainActivity extends Activity {
                 SpeechRecognizer mIat = SpeechRecognizer.createRecognizer(MainActivity.this,null);
                 mIat.setParameter(SpeechConstant.DOMAIN,"iat");
                 mIat.setParameter(SpeechConstant.LANGUAGE,"zh_cn");
-
+                mIat.setParameter(SpeechConstant.ASR_PTT,"0");//不要句号
                 mIat.startListening(mRecoListener);
             }
         });
