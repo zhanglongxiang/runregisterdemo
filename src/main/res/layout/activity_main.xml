@@ -22,8 +22,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"></LinearLayout> <!--textview与button中间增加空白处-->
+        android:layout_weight="1"></LinearLayout> <!--textview1与textview2中间增加空白处-->
 
+    <view
+        class = "com.example.zhanglongxiang.runregisterdemo.MainActivity$TextPage"
+        android:id="@+id/resultText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setbar_bg"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:layout_weight="2"/>
+
+
+
+   <!--<com.example.zhanglongxiang.runregisterdemo.MainActivity.TextPage-->
+       <!--android:id="@+id/resultText"-->
+       <!--android:layout_width="match_parent"-->
+       <!--android:layout_height="wrap_content"-->
+       <!--android:background="@drawable/setbar_bg"-->
+       <!--android:layout_gravity="center"-->
+       <!--android:textSize="20dp"-->
+       <!--android:layout_weight="2"-->
+       <!--android:text="中华人民共和国"/>-->
+
+    <!--<com.example.zhanglongxiang.runregisterdemo.TextPage-->
+        <!--android:id="@+id/resultText"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/setbar_bg"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:textSize="20dp"-->
+        <!--android:layout_weight="2"/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"></LinearLayout>
         <Button
             android:id="@+id/button_start"
             android:layout_width="wrap_content"
