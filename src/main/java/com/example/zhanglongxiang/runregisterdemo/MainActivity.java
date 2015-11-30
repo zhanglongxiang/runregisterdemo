@@ -35,10 +35,13 @@ import com.iflytek.cloud.SpeechUtility;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import pl.droidsonroids.gif.GifImageView;
+
 
 public class MainActivity extends Activity {
 
     private Button startButton = null;
+    private Button showButton = null;
     private TextPage mResultText = null;
     private static TextView showText = null;
     private String showResult = null;
@@ -47,7 +50,7 @@ public class MainActivity extends Activity {
     private String rate = "16000";
     private Toast mToast;
 
-
+    private GifImageView giv = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,22 +60,12 @@ public class MainActivity extends Activity {
 
         showText = (TextView)findViewById(R.id.showText);
 
-        //mResultText = (EditText)findViewById(R.id.editText);
         mResultText = (TextPage)findViewById(R.id.resultText);//获取textview
-//        Typeface face = Typeface.createFromAsset(getAssets(),"fonts/hwkt.ttf");//设置楷体
-//        mResultText.setTypeface(face);
-        startButton = (Button)findViewById(R.id.button_start);//获取按钮
-
-//        String s1 = mResultText.getText().toString();
-//        showText.setText(s1);
-
-        //Typeface fontFace = Typeface.createFromAsset(getAssets(),"fonts/华文楷体.ttf");
-        //mResultText.setTypeface(fontFace);
-
-        //final char[] tc = {'h','e','l','l','o','w','o','r','l','d'};
+        startButton = (Button)findViewById(R.id.button_start);//获取开始说话按钮
+        showButton = (Button)findViewById(R.id.button_show);//获取显示笔画按钮
 
         /*
-        按钮监听器
+        开始说话按钮监听器
          */
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,24 +79,14 @@ public class MainActivity extends Activity {
                 mIat.startListening(mRecoListener);
             }
         });
-//        /*
-//        显示结果EditText 触摸监听器
-//         */
-//        mResultText.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent event) {
-//                if(event.getAction() == MotionEvent.ACTION_DOWN){
-//                    Log.d("MainActivity","onTouchEvent_Action.Down");
-//                }else if(event.getAction() == MotionEvent.ACTION_UP){
-//                    Log.d("MainActivity","onTouchEvent_Action.UP");
-//                }
-//                Log.d("onTouchEvent","onTouchEvent_x:" + event.getX());
-//                Log.d("onTouchEvent","onTouchEvent_y:" + event.getY());
-//
-//                return false;
-//
-//            }
-//        });
+        /*
+        显示笔画按钮监听器
+         */
+        showButton.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v){
+                jumpToLayout2();
+            }
+        });
   }
    /*
    讯飞语音合成
@@ -126,9 +109,7 @@ public class MainActivity extends Activity {
         @Override
         public void onResult(RecognizerResult recognizerResult, boolean b) {
             String text = JsonParser.parseIatResult(recognizerResult.getResultString());
-            //String s = (String)text.subSequence(0,1);//只取第一个字符
             mResultText.append(text);
-            //mResultText.setText(text);
             mResultText.setSelection(mResultText.length());
         }
 
@@ -223,5 +204,12 @@ public class MainActivity extends Activity {
             }
             return true;
         }
+    }
+
+    public void jumpToLayout2(){
+        setContentView(R.layout.mylayout);//显示这个布局
+        giv = (GifImageView)findViewById(R.id.gifView);//找到自定义组件GifImageView
+        giv.setImageResource(R.drawable.ji);//给组件设置gif图片资源
+
     }
 }

@@ -34,8 +34,6 @@
         android:textSize="20dp"
         android:layout_weight="2"/>
 
-
-
    <!--<com.example.zhanglongxiang.runregisterdemo.MainActivity.TextPage-->
        <!--android:id="@+id/resultText"-->
        <!--android:layout_width="match_parent"-->
@@ -58,13 +56,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"></LinearLayout>
+        android:layout_weight="1"
+        ></LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
         <Button
             android:id="@+id/button_start"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_gravity="center"
-            android:textColor="#ffffff"
+            android:layout_gravity="center_vertical"
             android:text="点击说话"/>
+        <Button
+            android:id="@+id/button_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="学习笔画"/>
+        </LinearLayout>
     </LinearLayout>
