@@ -4,10 +4,12 @@ import android.app.Activity;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Layout;
 import android.text.Selection;
 import android.text.StaticLayout;
@@ -35,13 +37,16 @@ import com.iflytek.cloud.SpeechUtility;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity{
 
     private Button startButton = null;
     private Button showButton = null;
+    private Button clearButton = null;
+    private Button gameButton = null;
     private TextPage mResultText = null;
     private static TextView showText = null;
     private String showResult = null;
@@ -50,19 +55,25 @@ public class MainActivity extends Activity {
     private String rate = "16000";
     private Toast mToast;
 
-    private GifImageView giv = null;
+    private GifImageView giv = null;//声明自定义控件对象
+    protected static final String GIF_URL = "http://rayspace.cn/upload/mi.gif";//gif图片地址
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SpeechUtility.createUtility(this,SpeechConstant.APPID+"=563cafe2");
+        SpeechUtility.createUtility(this,SpeechConstant.APPID+"=563cafe2");//语音识别初始化
+        initComponent();
+  }
 
+    private void initComponent()
+    {
         showText = (TextView)findViewById(R.id.showText);
-
         mResultText = (TextPage)findViewById(R.id.resultText);//获取textview
         startButton = (Button)findViewById(R.id.button_start);//获取开始说话按钮
         showButton = (Button)findViewById(R.id.button_show);//获取显示笔画按钮
+        clearButton = (Button)findViewById(R.id.button_clear);//获取清屏按钮
+        gameButton = (Button)findViewById(R.id.button_game);
 
         /*
         开始说话按钮监听器
@@ -70,8 +81,6 @@ public class MainActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // mResultText.setText(tc,2,6);
-
                 SpeechRecognizer mIat = SpeechRecognizer.createRecognizer(MainActivity.this,null);
                 mIat.setParameter(SpeechConstant.DOMAIN,"iat");
                 mIat.setParameter(SpeechConstant.LANGUAGE,"zh_cn");
@@ -84,10 +93,31 @@ public class MainActivity extends Activity {
          */
         showButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v){
-                jumpToLayout2();
+                //jumpToLayout2();
+                Intent intent = new Intent(MainActivity.this,Gif_Activity.class);//跳转到Gif界面
+                startActivity(intent);
             }
         });
-  }
+        /*
+        清除内容按钮监听器
+         */
+        clearButton.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v){
+                mResultText.setText("");
+            }
+        });
+
+        /*
+        拼图游戏按钮监听器
+         */
+        gameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,GameActivity.class);//跳转到game界面
+                startActivity(intent);
+            }
+        });
+    }
    /*
    讯飞语音合成
     */
@@ -126,19 +156,15 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
@@ -210,6 +236,5 @@ public class MainActivity extends Activity {
         setContentView(R.layout.mylayout);//显示这个布局
         giv = (GifImageView)findViewById(R.id.gifView);//找到自定义组件GifImageView
         giv.setImageResource(R.drawable.ji);//给组件设置gif图片资源
-
     }
 }
