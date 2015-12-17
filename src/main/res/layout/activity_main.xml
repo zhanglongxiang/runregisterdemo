@@ -25,8 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"></LinearLayout> <!--textview1与textview2中间增加空白处-->
 
-    <view
-        class = "com.example.zhanglongxiang.runregisterdemo.MainActivity$TextPage"
+   <com.example.zhanglongxiang.runregisterdemo.TextArea
         android:id="@+id/resultText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

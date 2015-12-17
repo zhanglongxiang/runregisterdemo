@@ -47,16 +47,21 @@ public class MainActivity extends ActionBarActivity{
     private Button showButton = null;
     private Button clearButton = null;
     private Button gameButton = null;
-    private TextPage mResultText = null;
-    private static TextView showText = null;
+    private TextArea mResultText = null;
+    private TextView showText = null;
     private String showResult = null;
     private SpeechRecognizer iatRecognizer;
     private String engine = "iat";
     private String rate = "16000";
     private Toast mToast;
 
+
     private GifImageView giv = null;//声明自定义控件对象
     protected static final String GIF_URL = "http://rayspace.cn/upload/mi.gif";//gif图片地址
+
+    private String showChar = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +74,13 @@ public class MainActivity extends ActionBarActivity{
     private void initComponent()
     {
         showText = (TextView)findViewById(R.id.showText);
-        mResultText = (TextPage)findViewById(R.id.resultText);//获取textview
+        mResultText = (TextArea)findViewById(R.id.resultText);//获取textview
         startButton = (Button)findViewById(R.id.button_start);//获取开始说话按钮
         showButton = (Button)findViewById(R.id.button_show);//获取显示笔画按钮
         clearButton = (Button)findViewById(R.id.button_clear);//获取清屏按钮
-        gameButton = (Button)findViewById(R.id.button_game);
+        gameButton = (Button)findViewById(R.id.button_game);//获取游戏按钮
+
+        mResultText.setTextView(showText);//把显示大字的textview控件对象传进识别结果自定义控件中，为显示大字做准备
 
         /*
         开始说话按钮监听器
@@ -94,7 +101,9 @@ public class MainActivity extends ActionBarActivity{
         showButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v){
                 //jumpToLayout2();
+                String data = mResultText.getResult();//获得选中的字符，做为数据将来传到第2个Activity
                 Intent intent = new Intent(MainActivity.this,Gif_Activity.class);//跳转到Gif界面
+                intent.putExtra("extra_data",data);
                 startActivity(intent);
             }
         });
@@ -171,70 +180,16 @@ public class MainActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    自定义控件内部类
-     */
-    public static class TextPage extends EditText {
-
-        private int off;
-        private String result;
-
-
-        public TextPage(Context context) {
-            super(context);
-            initialize();
-        }
-
-        public TextPage(Context context, AttributeSet paramAttributeSet) {
-            super(context, paramAttributeSet);
-            initialize();
-        }
-
-        private void initialize() {
-            setGravity(Gravity.TOP);
-            setBackgroundColor(Color.WHITE);
-        }
-
-        protected void onCreateContextMenu(ContextMenu menu) {
-            //不做任何处理、为了阻止长按的时候弹出上下文菜单
-        }
-
-        protected MovementMethod getDefaultMovementMethod() { //这个方法什么意思？
-            return null;
-        }
-
-        public boolean getDefaultEditable() {
-            return false;
-        }
-
-        public boolean onTouchEvent(MotionEvent event) {//触屏事件
-            int action = event.getAction();
-            Layout layout = getLayout();
-            int line = 0;
-            switch (action) {
-                case MotionEvent.ACTION_DOWN:
-                    line = layout.getLineForVertical(getScrollY() + (int) event.getY());
-                    off = layout.getOffsetForHorizontal(line, (int) event.getX());
-                    Selection.setSelection(getEditableText(), off);
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                case MotionEvent.ACTION_UP:
-                    line = layout.getLineForVertical(getScrollY() + (int) event.getY());
-                    int curOff = layout.getOffsetForHorizontal(line, (int) event.getX());
-                    Selection.setSelection(getEditableText(), off, curOff);
-                    CharSequence sel = getEditableText().toString().subSequence(off, curOff);
-                    result = (String) sel;
-                    Log.d("MainActivity", result);
-                    showText.setText(result);
-                    break;
-            }
-            return true;
-        }
+    private void getChar(String result){
+        this.showChar = result;
     }
+
+
 
     public void jumpToLayout2(){
         setContentView(R.layout.mylayout);//显示这个布局
         giv = (GifImageView)findViewById(R.id.gifView);//找到自定义组件GifImageView
         giv.setImageResource(R.drawable.ji);//给组件设置gif图片资源
     }
+
 }
