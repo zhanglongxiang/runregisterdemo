@@ -12,6 +12,8 @@ import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -34,10 +36,14 @@ import pl.droidsonroids.gif.GifImageView;
 public class Gif_Activity extends ActionBarActivity{
 
     private GifImageView network_gifimageview = null;
+    private Button stopButton = null;
+    private Button playButton = null;
+    private Button resetButton = null;
 
     private ProgressDialog dialog;
     private AsyncHttpClient asyncHttpClient;
     private String data;//存放intent传来的数据
+    private GifDrawable gifDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,10 @@ public class Gif_Activity extends ActionBarActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//调用setDisplayHomeAsUpEnabled() 来把 app icon 设置成可用的向上按钮：
 
         network_gifimageview = (GifImageView) findViewById(R.id.gifView);
+        stopButton = (Button)findViewById(R.id.stop_button);
+        playButton = (Button)findViewById(R.id.play_button);
+        resetButton = (Button)findViewById(R.id.reset_button);
+
 
         /*
         把汉字键值对写进xml文件中，这个工作需要提前做好，现在只是实验所以写在这里
@@ -90,13 +100,12 @@ public class Gif_Activity extends ActionBarActivity{
         asyncHttpClient.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                GifDrawable drawable = null;
                 try {
-                    drawable = new GifDrawable(bytes);
+                    gifDrawable = new GifDrawable(bytes);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                network_gifimageview.setBackgroundDrawable(drawable);
+                network_gifimageview.setBackgroundDrawable(gifDrawable);
                 dialog.dismiss();
             }
 
@@ -106,6 +115,30 @@ public class Gif_Activity extends ActionBarActivity{
                 Toast.makeText(getApplicationContext(), "加载网络图片出错", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
 
+            }
+        });
+
+
+        /*
+        按钮事件监听器
+         */
+
+        stopButton.setOnClickListener(new View.OnClickListener() {//停止按钮监听器
+            @Override
+            public void onClick(View view) {
+                gifDrawable.stop();
+            }
+        });
+        playButton.setOnClickListener(new View.OnClickListener() {//播放按钮监听器
+            @Override
+            public void onClick(View view) {
+                gifDrawable.start();
+            }
+        });
+        resetButton.setOnClickListener(new View.OnClickListener() {//重置按钮监听器
+            @Override
+            public void onClick(View view) {
+                gifDrawable.reset();
             }
         });
     }

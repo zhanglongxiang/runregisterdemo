@@ -167,17 +167,22 @@ public class MainActivity extends ActionBarActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.add(1,Menu.FIRST,1,"Quit");
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()){
+            case 1:
+                super.finish();
+                System.exit(0);
+                return true;
+            default:
+                return false;
         }
-        return super.onOptionsItemSelected(item);
+        //return super.onOptionsItemSelected(item);
     }
 
     private void getChar(String result){

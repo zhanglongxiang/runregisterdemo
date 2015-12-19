@@ -27,31 +27,22 @@
 
    <com.example.zhanglongxiang.runregisterdemo.TextArea
         android:id="@+id/resultText"
-        android:layout_width="match_parent"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/setbar_bg"
+
+        android:background="@drawable/reply_custom_message_edit_background"
+
         android:layout_gravity="center"
-        android:textSize="20dp"
+        android:hint="Please speak"
+        android:paddingBottom="24dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="17dp"
+        android:textColor="#000000"
+        android:textColorHint="#AEAEAE"
+        android:textSize="20sp"
         android:layout_weight="2"/>
 
-   <!--<com.example.zhanglongxiang.runregisterdemo.MainActivity.TextPage-->
-       <!--android:id="@+id/resultText"-->
-       <!--android:layout_width="match_parent"-->
-       <!--android:layout_height="wrap_content"-->
-       <!--android:background="@drawable/setbar_bg"-->
-       <!--android:layout_gravity="center"-->
-       <!--android:textSize="20dp"-->
-       <!--android:layout_weight="2"-->
-       <!--android:text="中华人民共和国"/>-->
-
-    <!--<com.example.zhanglongxiang.runregisterdemo.TextPage-->
-        <!--android:id="@+id/resultText"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@drawable/setbar_bg"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:textSize="20dp"-->
-        <!--android:layout_weight="2"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
